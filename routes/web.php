@@ -1,5 +1,18 @@
 <?php
 
+/**
+ *
+ *  MVC - Model -> View -> Controller
+ *
+ *   - Controller: Receber o dado da reqisição e delegar pro model ou passar pra uma view...
+ *
+ *   - View: Ela é a camada de interação, onde interagimos com o sistem ou pode
+ * ser uma view de entrega de json para outro sistema...
+ *
+ *  - Model: O model processa ou contêm a regra de negócio, não necessariamente
+ * é banco de dados apenas.
+ */
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Vc acessa uma rul 127.0.0.1:8000/posts -> index(Front Ctrl)
+//Vc acessa uma url 127.0.0.1:8000/posts -> index(Front Ctrl)
 // -> procurar isso no route collection -> quando acha, ele executa o callback
 //-> o resultado do callback daquela rota é retornado como reposta...
 
@@ -23,9 +36,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/posts/{post}', function ($post) {
-    return view('posts.post', ['post' => $post]);
-});
+Route::get('/posts/{post}', [\App\Http\Controllers\HomeController::class, 'show']);
 
 //Rotas do Laravel Breeze - Que nos Entrega um Admin Inicial
 //Com login, registro, dashboard e reset de senha...
