@@ -32,11 +32,35 @@ use Illuminate\Support\Facades\Route;
 // -> procurar isso no route collection -> quando acha, ele executa o callback
 //-> o resultado do callback daquela rota é retornado como reposta...
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/posts/{post}', [\App\Http\Controllers\HomeController::class, 'show']);
+
+
+//Rotas admin posts
+
+Route::prefix('/admin')->name('admin.')->group(function () {
+    Route::prefix('/posts')
+        ->name('posts.')
+        ->controller(\App\Http\Controllers\Admin\PostsController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index'); //apelido admin.posts.index
+            Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
+        });
 });
 
-Route::get('/posts/{post}', [\App\Http\Controllers\HomeController::class, 'show']);
+
+
+
+
+
+
+
+
+
 
 //Rotas do Laravel Breeze - Que nos Entrega um Admin Inicial
 //Com login, registro, dashboard e reset de senha...
