@@ -41,16 +41,42 @@ Route::get('/posts/{post}', [\App\Http\Controllers\HomeController::class, 'show'
 
 //Rotas admin posts
 
-Route::prefix('/admin')->name('admin.')->group(function () {
-    Route::prefix('/posts')
-        ->name('posts.')
-        ->controller(\App\Http\Controllers\Admin\PostsController::class)
-        ->group(function () {
-            Route::get('/', 'index')->name('index'); //apelido admin.posts.index
-            Route::get('/create', 'create')->name('create');
-            Route::post('/store', 'store')->name('store');
-        });
-});
+Route::prefix('/admin')
+    ->middleware('auth')
+    ->name('admin.')
+    ->group(function () {
+        Route::resource('posts', \App\Http\Controllers\Admin\PostsController::class);
+
+        // Route::prefix('/posts')
+        //     ->name('posts.')
+        //     ->controller(\App\Http\Controllers\Admin\PostsController::class)
+        //     ->group(function () {
+        //         Route::get('/', 'index')->name('index'); //apelido admin.posts.index
+        //         Route::get('/create', 'create')->name('create');
+        //         Route::post('/store', 'store')->name('store');
+
+        //         Route::get('/{post}/edit', 'edit')->name('edit');
+        //         Route::post('/{post}/edit', 'update')->name('update');
+
+        //         Route::post('/{post}/destroy', 'destroy')->name('destroy');
+        //     });
+
+        /**
+         *
+         */
+
+        //Controllers como recurso ou restfullcontrolelrs
+
+        /**
+         *
+         * Post : GET, POST, PUT, PATCH, DELETE
+         *
+         *  GET /posts
+         *  POST /posts
+         *  PUT|PATCH /posts
+         *  DELETE /posts
+         */
+    });
 
 
 

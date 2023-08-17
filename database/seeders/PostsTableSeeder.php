@@ -24,9 +24,13 @@ class PostsTableSeeder extends Seeder
         // ]);
 
         //Estamos gerando na base, cinco posts fakes via factory
-        \App\Models\Post::factory(5)->create(); //is_active -> false
+        //\App\Models\Post::factory(5)->create(); //is_active -> false
 
         //Gerando mais 10 posta na base com estado de is_active true
-        \App\Models\Post::factory(10)->active()->create();
+        //\App\Models\Post::factory(10)->active()->create();
+
+        \App\Models\User::factory(10)
+            ->hasPosts(5, ['is_active' => true])
+            ->create();
     }
 }

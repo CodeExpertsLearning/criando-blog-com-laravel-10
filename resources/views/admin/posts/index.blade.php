@@ -18,6 +18,7 @@
                     <thead>
                         <tr>
                             <th class="px-2 py-4 text-left">#</th>
+                            <th class="px-2 py-4 text-left">Autor</th>
                             <th class="px-2 py-4 text-left">Titulo</th>
                             <th class="px-2 py-4 text-left">Criado em</th>
                             <th class="px-2 py-4 text-left">Status</th>
@@ -28,6 +29,7 @@
                         @forelse($posts as $post)
                             <tr>
                                 <td class="px-2 py-4 text-left">{{ $post->id }}</td>
+                                <td class="px-2 py-4 text-left">{{ $post->user?->name }}</td>
                                 <td class="px-2 py-4 text-left">{{ $post->title }}</td>
                                 <td class="px-2 py-4 text-left">{{ $post->created_at->format('d/m/Y H:i:s') }}</td>
                                 <td class="px-2 py-4 text-left">
@@ -35,11 +37,20 @@
                                         {{ $post->is_active ? 'Ativo' : 'Inativo' }}
                                     </span>
                                 </td>
-                                <td class="px-2 py-4 text-left">
-                                    <a href="#"
+                                <td class="px-2 py-4 text-left flex gap-2">
+                                    <a href="{{ route('admin.posts.edit', $post->id) }}"
                                         class="px-4 py-2 shadow rounded
                                                        text-white text-bold bg-blue-700 hover:bg-blue-900
                                                        transition ease-in-ou duration-300">Editar</a>
+
+                                    <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button
+                                            class="px-4 py-2 shadow rounded
+                                        text-white text-bold bg-red-700 hover:bg-red-900
+                                        transition ease-in-ou duration-300">Deletar</button>
+                                    </form>
                                 </td>
                             </tr>
                         @empty
